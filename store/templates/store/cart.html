@@ -15,8 +15,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <td><h5>Items: <b>3</b></h5></td>
-                        <td><h5>Total: <b>$43</b></h5></td>
+                        <td><h5>Items: <b>{{ order.get_cart_items }}</b></h5></td>
+                        <td><h5>Total: <b>${{ order.get_cart_total|floatformat:2 }}</b></h5></td>
                         <td>
                             <a class = 'btn btn-success' style="float: right;" href="{% url 'store:checkout'  %}">Checkout</a>
 
@@ -42,13 +42,13 @@
 
 
             </div>
-
+    {%  for item in items %}
             <div class="cart-row">
-                <div style="flex: 2;"> <img class="row-image" src="{% static 'images/test_img.png' %}"> </div>
-                <div style="flex: 2;">Product 1</div>
-                <div style="flex: 1;">$20</div>
+                <div style="flex: 2;"> <img class="row-image" src="{{ item.product.image_URL }}"> </div>
+                <div style="flex: 2;">{{ item.product.name }}</div>
+                <div style="flex: 1;">${{ item.product.price| floatformat:2}}</div>
                 <div style="flex: 1;">
-                    <p class="quantity">2</p>
+                    <p class="quantity">{{ item.quantity }}</p>
                     <div class="quantity">
                         <img class ="chg-quantity" src="{% static 'images/arrow-up.png' %}">
 
@@ -57,11 +57,11 @@
 
 
                 </div>
-                <div style="flex: 1;">40</div>
+                <div style="flex: 1;">{{ item.get_total|floatformat:2 }} </div>
 
                 </div>
 
-
+            {% endfor %}
 
                 </div>
 
